@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Service Details</title>
+</head>
+<body>
+
+<h2>Edit Service Details</h2>
+
+<form>
+
+    <!-- Hidden ID -->
+    <input type="hidden" id="customerId">
+
+    <!-- Read-only info -->
+    <p><b>Customer:</b> <span id="customerName"></span></p>
+    <p><b>Machine:</b> <span id="machine"></span></p>
+
+    <label>Parts Changed</label>
+    <input type="text" id="changePart" required>
+
+    <label>Price</label>
+    <input type="number" id="price" required>
+
+    <label>Status</label>
+    <select id="status">
+        <option value="Pending">Pending</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    <label>Delivery Date</label>
+    <input type="date" id="deliveryDate">
+
+    <br><br>
+    <button type="button" onclick="updateService()">Update</button>
+</form>
+
+<script src="edit-service.js"></script>
+</body>
+</html>

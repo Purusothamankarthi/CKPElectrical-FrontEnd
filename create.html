@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Service Entry</title>
+    <link rel="stylesheet" href="service-entry.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="form-box">
+            <h2>Customer Service Entry</h2>
+            <p class="subtitle">Enter customer and machine details</p>
+
+            <form action="http://localhost:8080/users/customerEnter" method="post">
+                <label>Customer Name</label>
+                <input type="text" placeholder="Enter customer name" name="customerName" required>
+
+                <label>Phone Number</label>
+                <input type="tel" placeholder="Enter phone number" name="customerPhone" required>
+
+                <label>Machine Name</label>
+                <input type="text" placeholder="Eg: TV / Washing Machine" name="Machine" required>
+                <br>
+                <label>Status</label>
+                <select name="status" required>
+                    
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Service Records</title>
+    <link rel="stylesheet" href="view.css">
+    <script type="text/javascript" src="java.js"></script>
+</head>
+<body>
+
+<div class="view-container">
+    <h2>Service Records</h2>
+    <p class="subtitle">Customer service details</p>
+
+    <table >
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Category</th>
+                <th>Changed Parts</th>
+                <th>Price (₹)</th>
+                <th>Given Date</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="customerdetails">                
+        </tbody>
+    </table>
+
+    <a href="dashboard.html" class="back">← Back to Dashboard</a>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+    showdetails();
+    }
+    
+    // Fetch customer details from the server
+    
+</script>
+</body>
+</html>
