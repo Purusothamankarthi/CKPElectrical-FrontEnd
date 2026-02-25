@@ -102,3 +102,59 @@ tbody tr:hover{
     color: #1f618d;
     text-decoration: none;
 }
+/* Center the search box */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+/* Input field */
+#searchInput {
+    width: 260px;
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Input focus effect */
+#searchInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+/* Search button */
+button {
+    padding: 10px 18px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Button hover */
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Button active */
+button:active {
+    transform: translateY(0);
+}
+
+/* Result text */
+#result {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}

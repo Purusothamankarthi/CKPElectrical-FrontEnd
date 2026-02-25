@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Service Shop Login</title>
     <link rel="stylesheet" href="index.css">
-    
+    <script type="text/javascript" src="index.js"></script>
 </head>
 <body>
 
@@ -13,12 +13,12 @@
         <h2>Service Shop Login</h2>
         <p class="subtitle">Manage customer service details</p>
 
-        <form   >
-            <label>Username</label>
-            <input type="text" placeholder="Enter username" id="name" name="name" required>
+        <form  onsubmit="login(event)">
+            <label for="name">Username</label>
+            <input type="text" placeholder="Enter username" id="name" name="name" autocomplete="username" required>
 
-            <label>Password</label>
-            <input type="password" placeholder="Enter password" id="password" name="password" autocomplete="new-password" required>
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter password" id="password" name="password1" autocomplete="new-password" required>
 
             <button type="submit" >Login</button>
             <br>

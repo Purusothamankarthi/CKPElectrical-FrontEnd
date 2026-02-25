@@ -42,6 +42,7 @@ function start() {
         })
         .then(() => {
             alert("Service updated successfully");
+            window.location.href = "view.html";
         })
         .catch(err => console.log(err));
     });

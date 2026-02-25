@@ -22,14 +22,30 @@
             <p>View service records</p>
         </a>
 
-        <a href="edit1.html" class="card">
-            <h3>Edit</h3>
-            <p>Edit service details</p>
-        </a>
+        
     </div>
 
-    <a href="login.html" class="logout">Logout</a>
+    <a href="index.html" onclick="logout()" class="logout">Logout</a>
 </div>
+
+<script>
+    // 🔐 Verify token when dashboard loads
+    window.onload = function () {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "index.html";
+        }
+    };
+
+    function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+    }
+    
+</script>
+
 
 </body>
 </html>

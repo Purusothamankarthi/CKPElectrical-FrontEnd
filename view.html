@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>View Service Records</title>
     <link rel="stylesheet" href="view.css">
+    <!-- <script src="api.js"></script> -->
     <script type="text/javascript" src="java.js"></script>
 </head>
 <body>
@@ -11,6 +12,12 @@
 <div class="view-container">
     <h2>Service Records</h2>
     <p class="subtitle">Customer service details</p>
+    <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search by phone number"   onkeyup="autoSearchCustomer()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+    <button >Search</button>
+</div>
+
+<p id="result"></p>
 
     <table >
         <thead>
