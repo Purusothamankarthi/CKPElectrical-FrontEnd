@@ -9,7 +9,20 @@ function edit() {
     const params = new URLSearchParams(window.location.search);
     customerId = params.get("customerId");
 
-    fetch(`http://localhost:8080/auth/customerdetails/${customerId}`)
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please login first");
+        window.location.href = "index.html";
+        return;
+    }
+
+    fetch(`http://localhost:8080/auth/customerdetails/${customerId}`, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        }
+    })
         .then(res => res.json())
         .then(c => {
             console.log(c.customerPhone);
@@ -26,6 +39,13 @@ function start() {
     document.getElementById("editForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Please login first");
+            window.location.href = "index.html";
+            return;
+        }
+
         const data = {
             changePart: document.getElementById("changePart").value,
             price: document.getElementById("price").value,
@@ -36,6 +56,7 @@ function start() {
         fetch(`http://localhost:8080/auth/customerdetails/${customerId}`, {
             method: "PATCH",
             headers: {
+                "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)

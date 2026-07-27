@@ -18,7 +18,8 @@ fetch('http://localhost:8080/auth/customerdetails',{
 
 .then(response => response.json())
 .then((cus)=>{
-    const customers=document.getElementById('customerdetails')
+    const customers=document.getElementById('customerdetails');
+    customers.innerHTML = ""; // Clear existing rows
     cus.forEach(custo => {
         var row=`<tr>
         <td>${custo.customerId}</td>
