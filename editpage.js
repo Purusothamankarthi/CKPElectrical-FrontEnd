@@ -1,3 +1,7 @@
+const SERVER_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8080"
+    : "https://ckpelectrical-backend.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
     edit();
     start();
@@ -16,7 +20,7 @@ function edit() {
         return;
     }
 
-    fetch(`http://localhost:8080/auth/customerdetails/${customerId}`, {
+    fetch(`${SERVER_URL}/auth/customerdetails/${customerId}`, {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -53,7 +57,7 @@ function start() {
             late: document.getElementById("late").value
         };
 
-        fetch(`http://localhost:8080/auth/customerdetails/${customerId}`, {
+        fetch(`${SERVER_URL}/auth/customerdetails/${customerId}`, {
             method: "PATCH",
             headers: {
                 "Authorization": "Bearer " + token,

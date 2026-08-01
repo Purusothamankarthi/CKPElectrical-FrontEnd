@@ -1,3 +1,7 @@
+const SERVER_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:8080"
+    : "https://ckpelectrical-backend.onrender.com";
+
 function showdetails()
 {
      const token = localStorage.getItem("token");
@@ -9,7 +13,7 @@ function showdetails()
         return;
     }
     // alert("show details");
-fetch('http://localhost:8080/auth/customerdetails',{
+fetch(`${SERVER_URL}/auth/customerdetails`,{
      method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
@@ -62,7 +66,7 @@ function searchCustomer() {
         return;
     }
 
-    fetch(`http://localhost:8080/auth/Customerdetails/${phone}`, {
+    fetch(`${SERVER_URL}/auth/Customerdetails/${phone}`, {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + localStorage.getItem("token")

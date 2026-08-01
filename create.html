@@ -42,6 +42,10 @@
 
 </body>
 <script>
+    const SERVER_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:8080"
+        : "https://ckpelectrical-backend.onrender.com";
+
     function submitForm(event) {
     event.preventDefault(); // stop normal form submit
 
@@ -62,7 +66,7 @@
         return;
     }
 
-    fetch("http://localhost:8080/auth/users/customerEnter", {
+    fetch(`${SERVER_URL}/auth/users/customerEnter`, {
         method: "POST",
         headers: {
             "Authorization": "Bearer " + token
