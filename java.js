@@ -98,27 +98,34 @@ function searchCustomer() {
         }
         return res.json();
     })
-    .then(custo => {
-        if (!custo) return;
+    .then(data => {
+        if (!data) return;
         const customers = document.getElementById("customerdetails");
         if (!customers) return;
 
-        customers.innerHTML = `
-            <tr>
-                <td>${custo.customerId || '-'}</td>
-                <td>${custo.customerName || '-'}</td>
-                <td>${custo.CustomerPhone || '-'}</td>
-                <td>${custo.Machine || '-'}</td>
-                <td>${custo.changePart || '-'}</td>
-                <td>${custo.price || 0}</td>
-                <td>${custo.now || '-'}</td>
-                <td>${custo.late || '-'}</td>
-                <td>${custo.status || '-'}</td>
-                <td>
-                    <a href="edit.html?customerId=${custo.customerId}">Edit</a>
-                </td>
-            </tr>
-        `;
+        customers.innerHTML = ""; // Clear existing rows
+
+        const list = Array.isArray(data) ? data : [data];
+
+        list.forEach(custo => {
+            const row = `
+                <tr>
+                    <td>${custo.customerId || '-'}</td>
+                    <td>${custo.customerName || '-'}</td>
+                    <td>${custo.CustomerPhone || '-'}</td>
+                    <td>${custo.Machine || '-'}</td>
+                    <td>${custo.changePart || '-'}</td>
+                    <td>${custo.price || 0}</td>
+                    <td>${custo.now || '-'}</td>
+                    <td>${custo.late || '-'}</td>
+                    <td>${custo.status || '-'}</td>
+                    <td>
+                        <a href="edit.html?customerId=${custo.customerId}">Edit</a>
+                    </td>
+                </tr>
+            `;
+            customers.innerHTML += row;
+        });
     })
     .catch(err => {
         console.error("Search error:", err);
