@@ -7,11 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     start();
 });
 
-let customerId; // 🌟 global
+let customerId; // global
 
 function edit() {
     const params = new URLSearchParams(window.location.search);
     customerId = params.get("customerId");
+
+    if (!customerId) {
+        return;
+    }
 
     const token = localStorage.getItem("token");
     if (!token) {
@@ -29,18 +33,28 @@ function edit() {
     })
         .then(res => res.json())
         .then(c => {
-            console.log(c.customerPhone);
+            const phone = c.CustomerPhone || c.customerPhone || '';
+            console.log("Customer Phone:", phone);
 
-            document.getElementById("customerName").value = c.customerName;
-            document.getElementById("CustomerPhone").value = c.CustomerPhone;
-            document.getElementById("Machine").value = c.Machine;
-            document.getElementById("now").value = c.now;
+            if (document.getElementById("customerName")) document.getElementById("customerName").value = c.customerName || '';
+            if (document.getElementById("CustomerPhone")) document.getElementById("CustomerPhone").value = phone;
+            if (document.getElementById("Machine")) document.getElementById("Machine").value = c.Machine || c.machine || '';
+            if (document.getElementById("now")) document.getElementById("now").value = c.now ? c.now.replace('T', ' ') : '';
+
+            // Pre-fill editable fields if they already exist
+            if (c.changePart && document.getElementById("changePart")) document.getElementById("changePart").value = c.changePart;
+            if (c.price && document.getElementById("price")) document.getElementById("price").value = c.price;
+            if (c.status && document.getElementById("status")) document.getElementById("status").value = c.status;
+            if (c.late && document.getElementById("late")) document.getElementById("late").value = c.late;
         })
         .catch(err => console.log(err));
 }
 
 function start() {
-    document.getElementById("editForm").addEventListener("submit", function (e) {
+    const editForm = document.getElementById("editForm");
+    if (!editForm) return;
+
+    editForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const token = localStorage.getItem("token");
@@ -65,10 +79,10 @@ function start() {
             },
             body: JSON.stringify(data)
         })
-        .then(() => {
-            alert("Service updated successfully");
-            window.location.href = "view.html";
-        })
-        .catch(err => console.log(err));
+            .then(() => {
+                alert("Service updated successfully");
+                window.location.href = "view.html";
+            })
+            .catch(err => console.log(err));
     });
 }
