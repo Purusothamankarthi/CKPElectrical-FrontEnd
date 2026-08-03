@@ -26,20 +26,19 @@ fetch(`${SERVER_URL}/auth/customerdetails`,{
     customers.innerHTML = ""; // Clear existing rows
     cus.forEach(custo => {
         var row=`<tr>
-        <td>${custo.customerId}</td>
-        <td>${custo.customerName}</td>
-        <td>${custo.CustomerPhone}</td>
-        <td>${custo.Machine}</td>
-        <td>${custo.changePart}</td>
-         <td>${custo.price}</td>
-         <td>${custo.now}</td>
-         <td>${custo.late}</td>
-         <td>${custo.status}</td>
+        <td>${custo.customerId || '-'}</td>
+        <td>${custo.customerName || '-'}</td>
+        <td>${custo.CustomerPhone || custo.customerPhone || '-'}</td>
+        <td>${custo.Machine || custo.machine || '-'}</td>
+        <td>${custo.changePart || '-'}</td>
+         <td>${custo.price || 0}</td>
+         <td>${custo.now || '-'}</td>
+         <td>${custo.late || '-'}</td>
+         <td>${custo.status || '-'}</td>
          <td><a href="edit.html?customerId=${custo.customerId}">Edit</a></td>
 
         </tr>`;
         customers.innerHTML+=row;
-        
     });
 })
 
@@ -112,8 +111,8 @@ function searchCustomer() {
                 <tr>
                     <td>${custo.customerId || '-'}</td>
                     <td>${custo.customerName || '-'}</td>
-                    <td>${custo.CustomerPhone || '-'}</td>
-                    <td>${custo.Machine || '-'}</td>
+                    <td>${custo.CustomerPhone || custo.customerPhone || '-'}</td>
+                    <td>${custo.Machine || custo.machine || '-'}</td>
                     <td>${custo.changePart || '-'}</td>
                     <td>${custo.price || 0}</td>
                     <td>${custo.now || '-'}</td>
