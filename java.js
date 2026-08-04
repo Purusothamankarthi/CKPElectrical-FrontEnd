@@ -24,7 +24,6 @@ function showdetails() {
     const token = localStorage.getItem("token");
 
     if (token === null) {
-        alert("Please login first");
         window.location.href = "index.html";
         return;
     }
@@ -146,7 +145,6 @@ function searchCustomer() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-        alert("Please login first");
         window.location.href = "index.html";
         return;
     }

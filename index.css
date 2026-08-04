@@ -8,7 +8,8 @@
 
 body{
     min-height: 100vh;
-    background: linear-gradient(135deg, #2c3e50, #3498db);
+    background: linear-gradient(rgba(20, 30, 48, 0.75), rgba(36, 59, 85, 0.75)), url('electrical_bg.png') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;

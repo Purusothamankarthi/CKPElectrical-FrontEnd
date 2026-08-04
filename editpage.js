@@ -33,7 +33,6 @@ function edit() {
 
     const token = localStorage.getItem("token");
     if (!token) {
-        alert("Please login first");
         window.location.href = "index.html";
         return;
     }
@@ -77,7 +76,6 @@ function start() {
 
         const token = localStorage.getItem("token");
         if (!token) {
-            alert("Please login first");
             window.location.href = "index.html";
             return;
         }
@@ -100,13 +98,11 @@ function start() {
             body: JSON.stringify(data)
         })
             .then(() => {
-                alert("Service updated successfully");
                 window.location.href = "view.html";
             })
             .catch(err => {
                 hideLoading();
                 console.log(err);
-                alert("Failed to update service record.");
             });
     });
 }

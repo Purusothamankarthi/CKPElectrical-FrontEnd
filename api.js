@@ -9,7 +9,6 @@ function apiFetch(url, options = {}) {
 
     // If no token, stop here
     if (!token) {
-        alert("Please login again");
         window.location.href = "index.html";
         return;
     }

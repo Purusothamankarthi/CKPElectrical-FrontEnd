@@ -80,7 +80,6 @@
 
     const token = localStorage.getItem("token");
     if (!token) {
-        alert("Please login first");
         window.location.href = "index.html";
         return;
     }
@@ -96,13 +95,11 @@
     })
     .then(response => response.text())
     .then(result => {
-        alert("Saved Successfully!");
         window.location.href = "dashboard.html";
     })
     .catch(error => {
         hideLoading();
         console.error(error);
-        alert("Failed to save service entry.");
     });
 }
 </script>

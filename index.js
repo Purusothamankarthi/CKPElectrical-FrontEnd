@@ -41,12 +41,11 @@ function login(event) {
     })
     .then(data => {
         localStorage.setItem("token", data.token);
-        alert("Login successful!");
         window.location.href = "dashboard.html";
     })
     .catch(error => {
         hideLoading();
-        alert("Login failed: " + error.message);
+        console.error("Login failed:", error.message);
     });
 }
 
@@ -67,7 +66,6 @@ function register(event) {
     })
     .then(response => {
         if (response.ok) {
-            alert("Registration successful! Please log in.");
             window.location.href = "index.html";
         } else {
             return response.json().then(data => { throw new Error(data.message || "Registration failed") });
@@ -75,7 +73,7 @@ function register(event) {
     })
     .catch(error => {
         hideLoading();
-        alert("Registration failed: " + error.message);
+        console.error("Registration failed:", error.message);
     });
 }
 
