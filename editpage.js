@@ -2,6 +2,20 @@ const SERVER_URL = window.location.hostname === "localhost" || window.location.h
     ? "http://localhost:8080"
     : "https://electrial-backend.onrender.com";
 
+window.addEventListener("load", function () {
+    hideLoading();
+});
+
+function showLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.remove("hidden");
+}
+
+function hideLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.add("hidden");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     edit();
     start();
@@ -24,6 +38,8 @@ function edit() {
         return;
     }
 
+    showLoading();
+
     fetch(`${SERVER_URL}/auth/customerdetails/${customerId}`, {
         method: "GET",
         headers: {
@@ -34,7 +50,6 @@ function edit() {
         .then(res => res.json())
         .then(c => {
             const phone = c.CustomerPhone || c.customerPhone || '';
-            console.log("Customer Phone:", phone);
 
             if (document.getElementById("customerName")) document.getElementById("customerName").value = c.customerName || '';
             if (document.getElementById("CustomerPhone")) document.getElementById("CustomerPhone").value = phone;
@@ -47,7 +62,10 @@ function edit() {
             if (c.status && document.getElementById("status")) document.getElementById("status").value = c.status;
             if (c.late && document.getElementById("late")) document.getElementById("late").value = c.late;
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .finally(() => {
+            hideLoading();
+        });
 }
 
 function start() {
@@ -71,6 +89,8 @@ function start() {
             late: document.getElementById("late").value
         };
 
+        showLoading();
+
         fetch(`${SERVER_URL}/auth/customerdetails/${customerId}`, {
             method: "PATCH",
             headers: {
@@ -83,6 +103,11 @@ function start() {
                 alert("Service updated successfully");
                 window.location.href = "view.html";
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                hideLoading();
+                console.log(err);
+                alert("Failed to update service record.");
+            });
     });
 }
+

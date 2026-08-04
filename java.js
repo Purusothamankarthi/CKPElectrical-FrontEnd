@@ -2,65 +2,145 @@ const SERVER_URL = window.location.hostname === "localhost" || window.location.h
     ? "http://localhost:8080"
     : "https://electrial-backend.onrender.com";
 
-function showdetails()
-{
-     const token = localStorage.getItem("token");
+let allCustomerRecords = [];
+let currentFilter = 'all';
 
-    // 🔐 Step 1: Check token exists
+// Auto-hide loading screen when page loads
+window.addEventListener("load", function () {
+    hideLoading();
+});
+
+function showLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.remove("hidden");
+}
+
+function hideLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.add("hidden");
+}
+
+function showdetails() {
+    const token = localStorage.getItem("token");
+
     if (token === null) {
         alert("Please login first");
         window.location.href = "index.html";
         return;
     }
-    // alert("show details");
-fetch(`${SERVER_URL}/auth/customerdetails`,{
-     method: "GET",
+
+    showLoading();
+
+    fetch(`${SERVER_URL}/auth/customerdetails`, {
+        method: "GET",
         headers: {
             "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"}
-})
-
-.then(response => response.json())
-.then((cus)=>{
-    const customers=document.getElementById('customerdetails');
-    customers.innerHTML = ""; // Clear existing rows
-    cus.forEach(custo => {
-        var row=`<tr>
-        <td>${custo.customerId || '-'}</td>
-        <td>${custo.customerName || '-'}</td>
-        <td>${custo.CustomerPhone || custo.customerPhone || '-'}</td>
-        <td>${custo.Machine || custo.machine || '-'}</td>
-        <td>${custo.changePart || '-'}</td>
-         <td>${custo.price || 0}</td>
-         <td>${custo.now || '-'}</td>
-         <td>${custo.late || '-'}</td>
-         <td>${custo.status || '-'}</td>
-         <td><a href="edit.html?customerId=${custo.customerId}">Edit</a></td>
-
-        </tr>`;
-        customers.innerHTML+=row;
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to fetch customer details");
+        }
+        return response.json();
+    })
+    .then((cus) => {
+        allCustomerRecords = Array.isArray(cus) ? cus : [];
+        filterRecords(currentFilter);
+    })
+    .catch(error => {
+        console.error('Error fetching customer details:', error);
+        const customers = document.getElementById('customerdetails');
+        if (customers) {
+            customers.innerHTML = `
+                <tr>
+                    <td colspan="10" style="text-align:center; padding: 20px; color: #e74c3c;">
+                        Error loading service records. Please try again.
+                    </td>
+                </tr>
+            `;
+        }
+    })
+    .finally(() => {
+        hideLoading();
     });
-})
-
-
-.catch(error => {
-    console.error('Error fetching customer details:', error);
-});
 }
 
+function filterRecords(filterType) {
+    currentFilter = filterType;
 
+    // Update active filter button styling
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById(`btn-${filterType}`);
+    if (activeBtn) activeBtn.classList.add('active');
 
-function searchCustomer() {
-    const phoneInput = document.getElementById("searchInput");
+    const searchVal = document.getElementById("searchInput") ? document.getElementById("searchInput").value.trim() : "";
 
-    if (!phoneInput) {
+    let filtered = allCustomerRecords;
+
+    // Apply status filter
+    if (filterType === 'completed') {
+        filtered = filtered.filter(item => (item.status || '').toLowerCase() === 'completed');
+    } else if (filterType === 'pending') {
+        filtered = filtered.filter(item => (item.status || '').toLowerCase() === 'pending');
+    }
+
+    // Apply search filter if phone search is active
+    if (searchVal !== "") {
+        filtered = filtered.filter(item => {
+            const phone = String(item.CustomerPhone || item.customerPhone || '');
+            return phone.includes(searchVal);
+        });
+    }
+
+    renderRecords(filtered);
+}
+
+function renderRecords(list) {
+    const customers = document.getElementById('customerdetails');
+    if (!customers) return;
+
+    customers.innerHTML = "";
+
+    if (!list || list.length === 0) {
+        const filterText = currentFilter !== 'all' ? currentFilter : '';
+        customers.innerHTML = `
+            <tr>
+                <td colspan="10" style="text-align:center; padding: 20px; color: #777;">
+                    No ${filterText} service records found.
+                </td>
+            </tr>
+        `;
         return;
     }
 
-    const phone = phoneInput.value.trim();
+    list.forEach((custo) => {
+        const rawStatus = (custo.status || '-').trim();
+        const statusClass = rawStatus.toLowerCase() === 'completed' ? 'completed' : (rawStatus.toLowerCase() === 'pending' ? 'pending' : '');
+        
+        const row = `<tr>
+            <td>${custo.customerId || '-'}</td>
+            <td>${custo.customerName || '-'}</td>
+            <td>${custo.CustomerPhone || custo.customerPhone || '-'}</td>
+            <td>${custo.Machine || custo.machine || '-'}</td>
+            <td>${custo.changePart || '-'}</td>
+            <td>₹${custo.price || 0}</td>
+            <td>${custo.now || '-'}</td>
+            <td>${custo.late || '-'}</td>
+            <td><span class="status-badge ${statusClass}">${rawStatus}</span></td>
+            <td><a href="edit.html?customerId=${custo.customerId}" class="edit-link">Edit</a></td>
+        </tr>`;
+        customers.innerHTML += row;
+    });
+}
 
+function searchCustomer() {
+    const phoneInput = document.getElementById("searchInput");
+    if (!phoneInput) return;
+
+    const phone = phoneInput.value.trim();
     if (phone === "") {
-        showdetails();
+        filterRecords(currentFilter);
         return;
     }
 
@@ -71,6 +151,8 @@ function searchCustomer() {
         return;
     }
 
+    showLoading();
+
     fetch(`${SERVER_URL}/auth/Customerdetails/${phone}`, {
         method: "GET",
         headers: {
@@ -80,16 +162,7 @@ function searchCustomer() {
     })
     .then(res => {
         if (res.status === 404) {
-            const customers = document.getElementById("customerdetails");
-            if (customers) {
-                customers.innerHTML = `
-                    <tr>
-                        <td colspan="10" style="text-align:center; padding: 15px; color: #777;">
-                            No customer record found for phone: <strong>${phone}</strong>
-                        </td>
-                    </tr>
-                `;
-            }
+            renderRecords([]);
             return null;
         }
         if (!res.ok) {
@@ -99,51 +172,25 @@ function searchCustomer() {
     })
     .then(data => {
         if (!data) return;
-        const customers = document.getElementById("customerdetails");
-        if (!customers) return;
-
-        customers.innerHTML = ""; // Clear existing rows
-
-        const list = Array.isArray(data) ? data : [data];
-
-        list.forEach(custo => {
-            const row = `
-                <tr>
-                    <td>${custo.customerId || '-'}</td>
-                    <td>${custo.customerName || '-'}</td>
-                    <td>${custo.CustomerPhone || custo.customerPhone || '-'}</td>
-                    <td>${custo.Machine || custo.machine || '-'}</td>
-                    <td>${custo.changePart || '-'}</td>
-                    <td>${custo.price || 0}</td>
-                    <td>${custo.now || '-'}</td>
-                    <td>${custo.late || '-'}</td>
-                    <td>${custo.status || '-'}</td>
-                    <td>
-                        <a href="edit.html?customerId=${custo.customerId}">Edit</a>
-                    </td>
-                </tr>
-            `;
-            customers.innerHTML += row;
-        });
+        allCustomerRecords = Array.isArray(data) ? data : [data];
+        filterRecords(currentFilter);
     })
     .catch(err => {
         console.error("Search error:", err);
+    })
+    .finally(() => {
+        hideLoading();
     });
 }
-let timer = null;
 
+let timer = null;
 function autoSearchCustomer() {
     clearTimeout(timer);
     timer = setTimeout(() => {
-        const phone = document.getElementById("searchInput").value.trim();
-
-        if (phone === "") {
-            showdetails();   // 👈 SHOW ALL
-        } else {
-            searchCustomer(phone); // 👈 SEARCH ONE
-        }
-    }, 1000);
+        searchCustomer();
+    }, 400);
 }
+
 
 
 

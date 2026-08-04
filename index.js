@@ -2,72 +2,81 @@ const SERVER_URL = window.location.hostname === "localhost" || window.location.h
     ? "http://localhost:8080"
     : "https://electrial-backend.onrender.com";
 
-// const cors=requires("cors");
-const token = localStorage.getItem("token");
+window.addEventListener("load", function () {
+    hideLoading();
+});
+
+function showLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.remove("hidden");
+}
+
+function hideLoading() {
+    const loader = document.getElementById("loadingOverlay");
+    if (loader) loader.classList.add("hidden");
+}
+
 function login(event) {
     event.preventDefault();
     const name = document.getElementById("name").value;
     const password1 = document.getElementById("password").value;
-    console.log(name, password1);
+    
+    showLoading();
+
     fetch(`${SERVER_URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name:name,
-             password:password1 })
+        body: JSON.stringify({ 
+            name: name,
+            password: password1 
+        })
     })
     .then(response => {
-        
         if (!response.ok) {
-            throw new Error("Login failed");
+            throw new Error("Login failed. Invalid username or password.");
         }
-            return response.json();
-        })
-    
+        return response.json();
+    })
     .then(data => {
         localStorage.setItem("token", data.token);
         alert("Login successful!");
         window.location.href = "dashboard.html";
     })
     .catch(error => {
-        alert("Login failed: rghn " );
+        hideLoading();
+        alert("Login failed: " + error.message);
     });
-   
 }
 
-
 function register(event) {
-    
-event.preventDefault();
+    event.preventDefault();
     const Fullname = document.getElementById("Fullname").value;
     const phonenumber = document.getElementById("phonenumber").value;
-
     const name = document.getElementById("name").value;
     const password1 = document.getElementById("password").value;
     const password2 = document.getElementById("password2").value;
-console.log("name:", name);
-console.log("password1:", password1);
-    fetch(`${SERVER_URL}/auth/register`,{
+
+    showLoading();
+
+    fetch(`${SERVER_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Fullname, phonenumber, name, password1, password2 })
-        
     })
     .then(response => {
         if (response.ok) {
-             alert("Registration successful! Please log in.");
+            alert("Registration successful! Please log in.");
             window.location.href = "index.html";
-        }
-        else{
-            return response.json().then(data => {throw new Error(data.message || "Registration failed")}); 
-            
-             
+        } else {
+            return response.json().then(data => { throw new Error(data.message || "Registration failed") });
         }
     })
-    
     .catch(error => {
+        hideLoading();
         alert("Registration failed: " + error.message);
     });
 }
+
 

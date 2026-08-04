@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
 
 <div class="dashboard">
     <h2>Service Shop Dashboard</h2>
@@ -32,6 +36,9 @@
 <script>
     // 🔐 Verify token when dashboard loads
     window.onload = function () {
+        const loader = document.getElementById("loadingOverlay");
+        if (loader) loader.classList.add("hidden");
+
         const token = localStorage.getItem("token");
 
         if (!token) {

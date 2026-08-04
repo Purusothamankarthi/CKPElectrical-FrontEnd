@@ -9,13 +9,25 @@
     <script type="text/javascript" src="java.js"></script>
 </head>
 <body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
 
 <div class="view-container">
     <h2>Service Records</h2>
     <p class="subtitle">Customer service details</p>
+    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search by phone number" onkeyup="autoSearchCustomer()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         <button type="button" onclick="searchCustomer()">Search</button>
+    </div>
+
+    <!-- Status Filter Buttons -->
+    <div class="filter-container">
+        <button type="button" class="filter-btn active" id="btn-all" onclick="filterRecords('all')">All Records</button>
+        <button type="button" class="filter-btn" id="btn-completed" onclick="filterRecords('completed')">Completed</button>
+        <button type="button" class="filter-btn" id="btn-pending" onclick="filterRecords('pending')">Pending</button>
     </div>
 
     <p id="result"></p>
