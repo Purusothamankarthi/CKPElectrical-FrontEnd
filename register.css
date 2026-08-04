@@ -6,24 +6,27 @@
 }
 
 body{
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(135deg, #16a085, #2ecc71);
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 15px;
 }
 
 .container{
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .register-box{
     background: #ffffff;
-    width: 380px;
-    padding: 30px;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px 25px;
+    border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
@@ -31,6 +34,7 @@ body{
     text-align: center;
     margin-bottom: 10px;
     color: #2c3e50;
+    font-size: 24px;
 }
 
 .subtitle{
@@ -43,38 +47,81 @@ body{
 label{
     font-size: 14px;
     color: #333;
+    font-weight: 500;
 }
 
 input{
     width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px 0;
+    padding: 11px 14px;
+    margin: 6px 0 14px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #16a085;
 }
 
 button{
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #16a085;
     border: none;
     color: white;
     font-size: 16px;
-    border-radius: 5px;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 button:hover{
     background-color: #138d75;
 }
 
+button:active {
+    transform: scale(0.99);
+}
+
 .login-link{
     text-align: center;
-    margin-top: 15px;
+    margin-top: 18px;
     font-size: 14px;
+    color: #555;
 }
 
 .login-link a{
     color: #16a085;
     text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
 }
+
+.login-link a:hover {
+    color: #117a65;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .register-box {
+        padding: 24px 18px;
+    }
+
+    .register-box h2 {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    input, button {
+        font-size: 16px; /* Prevents auto-zoom on iOS */
+    }
+}
+

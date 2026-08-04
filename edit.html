@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Service Record</title>
     <link rel="stylesheet" href="edit.css">
 
@@ -10,7 +11,7 @@
        
     </script>
 </head>
-<body >
+<body>
 
 <div class="edit-container">
     <h2>Edit Service Details</h2>
@@ -19,25 +20,25 @@
     <form class="edit-form" action="#" method="post" id="editForm">
 
         <!-- READ ONLY -->
-       <div class="form-group">
-    <label>Customer Name</label>
-    <input type="text" id="customerName" name="customerName" readonly>
-</div>
+        <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" id="customerName" name="customerName" readonly>
+        </div>
 
-<div class="form-group">
-    <label>Phone Number</label>
-    <input type="tel" id="CustomerPhone" name="customerPhone" readonly>
-</div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="CustomerPhone" name="customerPhone" readonly>
+        </div>
 
-<div class="form-group">
-    <label>Category</label>
-    <input type="text" id="Machine" name="machine" readonly>
-</div>
+        <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="Machine" name="machine" readonly>
+        </div>
 
-<div class="form-group">
-    <label>Given Date</label>
-    <input type="text" id="now" name="now" readonly>
-</div>
+        <div class="form-group">
+            <label>Given Date</label>
+            <input type="text" id="now" name="now" readonly>
+        </div>
 
 
         <!-- EDITABLE -->
@@ -53,7 +54,7 @@
 
         <div class="form-group">
             <label>Status</label>
-            <select id="status" id="status" name="status" required>
+            <select id="status" name="status" required>
                 <option>Pending</option>
                 <option selected>Completed</option>
             </select>
@@ -62,12 +63,12 @@
         <!-- DELIVERY DATE (SHOW ONLY WHEN COMPLETED) -->
         <div class="form-group" id="delivery-section">
             <label>Delivery Date</label>
-            <input type="date"  id="late" name="late">
+            <input type="date" id="late" name="late">
         </div>
 
         <div class="btn-group">
-            <button type="submit"  >Update</button>
-            <!-- <a href="view.html" class="cancel">Cancel</a> -->
+            <button type="submit">Update</button>
+            <a href="view.html" class="cancel">Cancel</a>
         </div>
 
     </form>

@@ -11,12 +11,14 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px 15px;
 }
 
 .edit-container{
     background: #ffffff;
-    width: 450px;
-    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px 25px;
     border-radius: 12px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.3);
 }
@@ -25,12 +27,13 @@ body{
     text-align: center;
     color: #2c3e50;
     margin-bottom: 5px;
+    font-size: 24px;
 }
 
 .subtitle{
     text-align: center;
     font-size: 13px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     color: #666;
 }
 
@@ -47,28 +50,39 @@ body{
 
 .form-group label{
     font-size: 13px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     color: #333;
+    font-weight: 500;
 }
 
 .form-group input,
 .form-group select{
-    padding: 8px;
-    border-radius: 5px;
+    padding: 10px;
+    border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 14px;
+    outline: none;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #27ae60;
 }
 
 .form-group input[readonly]{
-    background-color: #f2f2f2;
+    background-color: #f4f6f8;
     color: #777;
     cursor: not-allowed;
+    border-color: #e1e8ed;
 }
 
-/* FULL WIDTH ROWS */
+/* FULL WIDTH ROWS ON DESKTOP */
+.form-group:nth-child(5),
 .form-group:nth-child(6),
 .form-group:nth-child(7),
-.form-group:nth-child(8){
+#delivery-section{
     grid-column: span 2;
 }
 
@@ -76,21 +90,28 @@ body{
     grid-column: span 2;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
 }
 
 button{
-    padding: 10px 25px;
+    padding: 11px 25px;
     background-color: #27ae60;
     border: none;
     color: white;
     font-size: 15px;
-    border-radius: 5px;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 button:hover{
     background-color: #1e8449;
+}
+
+button:active {
+    transform: scale(0.99);
 }
 
 .cancel{
@@ -98,7 +119,58 @@ button:hover{
     color: #c0392b;
     font-size: 15px;
     font-weight: bold;
+    padding: 8px 16px;
+    border: 1px solid #c0392b;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
-#delivery-section{
-    grid-column: span 2;
+
+.cancel:hover {
+    background-color: #c0392b;
+    color: white;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 576px) {
+    .edit-container {
+        padding: 24px 18px;
+    }
+
+    .edit-container h2 {
+        font-size: 20px;
+    }
+
+    .edit-form {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-group,
+    .form-group:nth-child(5),
+    .form-group:nth-child(6),
+    .form-group:nth-child(7),
+    #delivery-section,
+    .btn-group {
+        grid-column: span 1;
+    }
+
+    .form-group input,
+    .form-group select,
+    button {
+        font-size: 16px; /* Prevents auto-zoom on iOS */
+    }
+
+    .btn-group {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        margin-top: 15px;
+    }
+
+    .btn-group button,
+    .btn-group .cancel {
+        text-align: center;
+        width: 100%;
+    }
+}
+

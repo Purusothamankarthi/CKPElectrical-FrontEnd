@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Service Records</title>
     <link rel="stylesheet" href="view.css">
     <!-- <script src="api.js"></script> -->
@@ -13,30 +14,32 @@
     <h2>Service Records</h2>
     <p class="subtitle">Customer service details</p>
     <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search by phone number"   onkeyup="autoSearchCustomer()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-    <button >Search</button>
-</div>
+        <input type="text" id="searchInput" placeholder="Search by phone number" onkeyup="autoSearchCustomer()" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <button type="button" onclick="searchCustomer()">Search</button>
+    </div>
 
-<p id="result"></p>
+    <p id="result"></p>
 
-    <table >
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Category</th>
-                <th>Changed Parts</th>
-                <th>Price (₹)</th>
-                <th>Given Date</th>
-                <th>Delivery Date</th>
-                <th>Status</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        <tbody id="customerdetails">                
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Category</th>
+                    <th>Changed Parts</th>
+                    <th>Price (₹)</th>
+                    <th>Given Date</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody id="customerdetails">                
+            </tbody>
+        </table>
+    </div>
 
     <a href="dashboard.html" class="back">← Back to Dashboard</a>
 </div>
